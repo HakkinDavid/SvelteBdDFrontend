@@ -5,7 +5,8 @@
 		{ route: '/', name: 'Inicio' },
 		{ route: '/about', name: 'Sobre nosotros' },
     { route: '/clientes', name: 'Clientes' },
-		{ route: '/empleados', name: 'Empleados' }
+		{ route: '/empleados', name: 'Empleados' },
+		{ route: '/departamentos', name: 'Departamentos' }
 	];
 
 </script>
