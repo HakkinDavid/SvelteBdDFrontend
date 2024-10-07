@@ -16,7 +16,7 @@
     <h3>Consultas 1-10</h3>
     {#each consultasCol1 as consulta, i}
       <div class="consulta-item bg-blue-100 p-2 m-1 border rounded">
-        <p>{consulta}</p>
+        <p>{(i + 1) + '. ' + consulta}</p>
         <button class="btn-accion bg-blue-500 text-white px-2 py-1 rounded mt-2" on:click={()=>{goto('/consultas/' + (i + 1))}}>Ver</button>
       </div>
     {/each}
@@ -26,7 +26,7 @@
     <h3>Consultas 11-20</h3>
     {#each consultasCol2 as consulta, i}
       <div class="consulta-item bg-green-100 p-2 m-1 border rounded">
-        <p>{consulta}</p>
+        <p>{(i + 11) + '. ' + consulta}</p>
         <button class="btn-accion bg-green-500 text-white px-2 py-1 rounded mt-2" on:click={()=>{goto('/consultas/' + (i + 11))}}>Ver</button>
       </div>
     {/each}
@@ -36,7 +36,7 @@
     <h3>Consultas 21-30</h3>
     {#each consultasCol3 as consulta, i}
       <div class="consulta-item bg-yellow-100 p-2 m-1 border rounded">
-        <p>{consulta}</p>
+        <p>{(i + 21) + '. ' + consulta}</p>
         <button class="btn-accion bg-yellow-500 text-white px-2 py-1 rounded mt-2" on:click={()=>{goto('/consultas/' + (i + 21))}}>Ver</button>
       </div>
     {/each}

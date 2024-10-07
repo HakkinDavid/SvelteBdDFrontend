@@ -8,7 +8,7 @@
   let consulta_generada = plantillas[data.consulta_id-1];
 
   onMount (() => {
-    console.log("Plantilla de consulta: " + consulta_generada);
+    console.log("Plantilla de consulta: \n\n" + consulta_generada);
   });
 
   function generarConsulta () {
@@ -37,6 +37,8 @@
               <option value={o.id}>{o.nombre}</option>
             {/each}
           </select>
+        {:else if p.tipo == 'n'}
+          <input type="number" step="{p.subtipo == 'i' ? '1' : '0.01'}" bind:value={P[i].dato}/>
         {/if}
       </div>
     {/each}
@@ -44,7 +46,7 @@
   <button class="h-12 enabled:bg-green-200 rounded-lg px-2 disabled:bg-gray-200"
     on:click={() => {
       generarConsulta();
-      console.log("Consulta generada: " + consulta_generada);
+      console.log("Consulta generada: \n\n" + consulta_generada);
       goto ('/consultas/' + data.consulta_id + '/' + encodeURIComponent(consulta_generada));
     }}
   >Generar</button>

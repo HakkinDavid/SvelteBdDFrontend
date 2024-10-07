@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Consulta {data.consulta_id}</title>
+	<title>Resultado de consulta {data.consulta_id}</title>
 </svelte:head>
 
 

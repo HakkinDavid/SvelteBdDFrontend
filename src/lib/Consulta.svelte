@@ -39,6 +39,9 @@
     },
     's': {
       'd': "Selecciona un departamento"
+    },
+    'n': {
+      'i': "Limita el número de resultados"
     }
   };
 
@@ -51,6 +54,30 @@
     [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}, {tipo: 's', subtipo: 'd', dato: ""}],
     [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
     [{tipo: 's', subtipo: 'd', dato: ""}],
+    [],
+    [{tipo: 's', subtipo: 'd', dato: ""}, {tipo: 'n', subtipo: 'i', dato: "5"}],
+
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+
+    [],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [],
+    [],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}, {tipo: 'n', subtipo: 'i', dato: "10"}]
   ];
 
   export const plantillas = [
@@ -61,6 +88,30 @@
     "SELECT departamento, COUNT(orden_id) AS num_atenciones FROM vw_atenciones_departamento WHERE fecha_factura BETWEEN '{P1}' AND '{P2}' GROUP BY departamento ORDER BY num_atenciones DESC",
     "SELECT departamento_id, SUM(ganancias) AS total_ganancias FROM vw_ganancias_departamento WHERE fecha_factura BETWEEN '{P1}' AND '{P2}' AND departamento_id = {P3} GROUP BY departamento_id",
     "SELECT empleado_id, nombre_empleado, SUM(subtotal) AS ganancias FROM vw_empleado_mayor_ganancia WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY empleado_id ORDER BY ganancias DESC LIMIT 1",
-    "SELECT * FROM vw_supervisores_y_supervisados WHERE departamento = {P1}",
+    "SELECT * FROM vw_supervisores_y_supervisados WHERE departamento_id = {P1}",
+    "SELECT * FROM vw_clientes_y_automoviles",
+    "SELECT descripción, frecuencia FROM vw_reparaciones_mas_concurrentes WHERE departamento_id = {P1} ORDER BY frecuencia DESC LIMIT {P2}",
+
+    "SELECT departamento, COUNT(refacción_id) AS cantidad_refacciones_utilizadas FROM vw_departamento_consumo_refacciones WHERE fecha_cobro BETWEEN '{P1}' AND '{P2}' GROUP BY departamento ORDER BY cantidad_refacciones_utilizadas DESC LIMIT 1",
+    "SELECT * FROM vw_promociones WHERE fecha_inicio <= '{P1}' AND fecha_fin >= '{P2}'",
+    "SELECT garantia, SUM(subtotal) AS costo_total FROM vw_garantias_servicios_costo WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY garantia",
+    "SELECT departamento, COUNT(*) AS num_reparaciones FROM vw_departamento_reparaciones WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY departamento ORDER BY num_reparaciones DESC LIMIT 1",
+    "SELECT departamento, COUNT(*) AS num_reparaciones FROM vw_departamento_reparaciones WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY departamento ORDER BY num_reparaciones ASC LIMIT 1",
+    "SELECT * FROM vw_consumo_refacciones_departamento",
+    "SELECT SUM(total) AS total_ganancias FROM vw_ganancias_taller WHERE fecha_cobro BETWEEN '{P1}' AND '{P2}'",
+    "SELECT * FROM vw_empleados_por_departamento",
+    "SELECT marca, modelo, año, color, fecha AS fecha_registro FROM vw_automoviles WHERE fecha BETWEEN '{P1}' AND '{P2}'",
+    "SELECT nombre, apellido1, apellido2, fecha as fecha_diagnóstico FROM vw_clientes_diagnostico WHERE fecha BETWEEN '{P1}' AND '{P2}'",
+
+    "SELECT * FROM vw_cliente_mayor_gasto",
+    "SELECT marca, modelo, año, color, gasto_total FROM vw_automovil_gasto WHERE cliente_id IN ( SELECT cliente_id FROM detalle_orden d WHERE d.fecha_cobro BETWEEN '{P1}' AND '{P2}' ) ORDER BY gasto_total DESC LIMIT 1",
+    "SELECT * FROM vw_refaccion_mas_vendida",
+    "SELECT * FROM vw_departamento_mas_garantias",
+    "SELECT nombre, apellido1, apellido2, tiempo_sin_visitar FROM vw_cliente_tiempo_sin_visitar WHERE vehiculo_id IN ( SELECT v.id FROM vehículo v LEFT JOIN diagnóstico d ON v.id = d.vehículo_id WHERE d.fecha BETWEEN '{P1}' AND '{P2}' ) ORDER BY tiempo_sin_visitar DESC LIMIT 1",
+    "SELECT promoción_id, total_aplicaciones FROM vw_promocion_aplicada WHERE promoción_id IN ( SELECT do.promoción_id FROM detalle_orden do WHERE do.fecha_cobro BETWEEN '{P1}' AND '{P2}' ) ORDER BY total_aplicaciones DESC LIMIT 1",
+    "SELECT COUNT(*) AS total_promociones_vencidas FROM vw_promociones WHERE fecha_fin BETWEEN '{P1}' AND '{P2}'",
+    "SELECT * FROM vw_empleado_mayor_garantias",
+    "SELECT nombre_cliente, nombre_automovil, COUNT(servicio_id) AS cantidad_servicios FROM vw_cliente_automovil_servicios WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY nombre_cliente, nombre_automovil ORDER BY cantidad_servicios DESC LIMIT 1",
+    "SELECT id_servicio, ganancia_servicio, fecha_servicio FROM vw_servicios_menor_ganancia WHERE fecha_servicio BETWEEN '{P1}' AND '{P2}' ORDER BY ganancia_servicio ASC LIMIT {P3}"
   ];
 </script>
