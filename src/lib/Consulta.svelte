@@ -49,6 +49,8 @@
     [],
     [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
     [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}, {tipo: 's', subtipo: 'd', dato: ""}],
+    [{tipo: 'f', subtipo: 'i', dato: ""}, {tipo: 'f', subtipo: 'f', dato: ""}],
+    [{tipo: 's', subtipo: 'd', dato: ""}],
   ];
 
   export const plantillas = [
@@ -58,5 +60,7 @@
     "SELECT * FROM vw_ventas_servicio_diagnosticos",
     "SELECT departamento, COUNT(orden_id) AS num_atenciones FROM vw_atenciones_departamento WHERE fecha_factura BETWEEN '{P1}' AND '{P2}' GROUP BY departamento ORDER BY num_atenciones DESC",
     "SELECT departamento_id, SUM(ganancias) AS total_ganancias FROM vw_ganancias_departamento WHERE fecha_factura BETWEEN '{P1}' AND '{P2}' AND departamento_id = {P3} GROUP BY departamento_id",
+    "SELECT empleado_id, nombre_empleado, SUM(subtotal) AS ganancias FROM vw_empleado_mayor_ganancia WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY empleado_id ORDER BY ganancias DESC LIMIT 1",
+    "SELECT * FROM vw_supervisores_y_supervisados WHERE departamento = {P1}",
   ];
 </script>
