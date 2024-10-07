@@ -1,12 +1,12 @@
 <script lang="ts">
 
-	// Imports:
+	
 	import { onMount } from 'svelte';
   import Empleado from '$lib/Empleado.svelte';
   export let data;
 
 
-	// Initializations & Exports:
+	
 
 
 	onMount(() => {
@@ -16,23 +16,19 @@
 	
 </script>
 
-<!-- #################################################################################################### -->
 
-<!-- SvelteKit Dynamic Header -->
 <svelte:head>
 	<title>Empleados</title>
 	<meta name="description" content="Página de inicio" />
 </svelte:head>
 
-<!-- Page Content -->
+
 <section class="flex flex-col gap-2">
   <h3>Empleados</h3>
 	{#each data.empleado as empleado, i}
     <Empleado data={empleado}/>
   {/each}
 </section>
-
-<!-- #################################################################################################### -->
 
 <style>
 

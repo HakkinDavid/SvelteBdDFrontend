@@ -1,20 +1,20 @@
 /// <reference lib="webworker" />
 
-// Imports:
+
 import { build, files, version } from '$service-worker';
 
-// Initializations:
+
 const worker = (self as unknown) as ServiceWorkerGlobalScope;
 const FILES = `cache${version}`;
 const to_cache = build.concat(files);
 const staticAssets = new Set(to_cache);
 
-// Install Event:
+
 worker.addEventListener('install', (event) => {
 	event.waitUntil(caches.open(FILES).then((cache) => cache.addAll(to_cache)).then(() => { worker.skipWaiting() }));
 });
 
-// Activation Event:
+
 worker.addEventListener('activate', (event) => {
 	event.waitUntil(caches.keys().then(async (keys) => {
     for(const key of keys) {
@@ -24,7 +24,7 @@ worker.addEventListener('activate', (event) => {
 	}));
 });
 
-// Fetch & Cache Event:
+
 async function fetchAndCache(request: Request) {
 	const cache = await caches.open(`offline${version}`);
 	try {
@@ -38,7 +38,7 @@ async function fetchAndCache(request: Request) {
 	}
 }
 
-// Fetch Event:
+
 worker.addEventListener('fetch', (event) => {
 	if(event.request.method !== 'GET' || event.request.headers.has('range')) return;
 	const url = new URL(event.request.url);

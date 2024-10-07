@@ -1,23 +1,19 @@
 <script lang="ts">
 
-	// Initializations:
+	
 	const githubUser = 'HakkinDavid';
   const githubName = 'SvelteBdDFrontend';
 	const githubLink = `https://github.com/${githubUser}/${githubName}`;
 	
 </script>
 
-<!-- #################################################################################################### -->
-
 <footer>
 
-	<!-- Footer Content -->
+	
 	<!-- svelte-ignore a11y-missing-content -->
 	<a href={githubLink}><span>Visita nuestro repositorio aquí</span></a>.
 
 </footer>
-
-<!-- #################################################################################################### -->
 
 <style>
 

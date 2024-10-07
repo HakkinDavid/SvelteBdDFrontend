@@ -4,7 +4,6 @@ import { mysql_connection } from '$lib/mysql';
     
     return {
       cliente: (await mysql_connection.query('SELECT * FROM cliente'))[0],
-      // Esto es una prueba, en realidad conviene mover todas las peticiones a páginas individuales
       /*
       departamento: (await mysql_connection.query('SELECT * FROM departamento'))[0],
       detalle_orden: (await mysql_connection.query('SELECT * FROM detalle_orden'))[0],
