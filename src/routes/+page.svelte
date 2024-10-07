@@ -13,6 +13,6 @@
 </svelte:head>
 
 
-<section class="flex flex-col gap-2">
+<section class="flex flex-col gap-2 h-screen">
   La nada absoluta. Selecciona una opción de navegación.
 </section>

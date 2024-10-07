@@ -19,7 +19,7 @@
 </svelte:head>
 
 
-<section>
+<section class="h-screen">
 	Safo.
 </section>
 
