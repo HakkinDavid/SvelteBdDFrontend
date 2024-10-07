@@ -49,5 +49,5 @@
       console.log("Consulta generada: \n\n" + consulta_generada);
       goto ('/consultas/' + data.consulta_id + '/' + encodeURIComponent(consulta_generada));
     }}
-  >Generar</button>
+  >Consultar</button>
 </div>

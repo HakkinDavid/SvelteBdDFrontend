@@ -1,18 +1,6 @@
 <script lang="ts">
-
-	
-	import { onMount } from 'svelte';
   import Empleado from '$lib/Empleado.svelte';
   export let data;
-
-
-	
-
-
-	onMount(() => {
-    console.log("Datos de la base de datos:");
-    console.log(data);
-	});
 	
 </script>
 
