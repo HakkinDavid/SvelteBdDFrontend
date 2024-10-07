@@ -108,10 +108,12 @@
     "SELECT * FROM vw_refaccion_mas_vendida",
     "SELECT * FROM vw_departamento_mas_garantias",
     "SELECT nombre, apellido1, apellido2, tiempo_sin_visitar FROM vw_cliente_tiempo_sin_visitar WHERE vehiculo_id IN ( SELECT v.id FROM vehículo v LEFT JOIN diagnóstico d ON v.id = d.vehículo_id WHERE d.fecha BETWEEN '{P1}' AND '{P2}' ) ORDER BY tiempo_sin_visitar DESC LIMIT 1",
-    "SELECT promoción_id, total_aplicaciones FROM vw_promocion_aplicada WHERE promoción_id IN ( SELECT do.promoción_id FROM detalle_orden do WHERE do.fecha_cobro BETWEEN '{P1}' AND '{P2}' ) ORDER BY total_aplicaciones DESC LIMIT 1",
+    "SELECT promoción_id, descripción, total_aplicaciones FROM vw_promocion_aplicada WHERE promoción_id IN ( SELECT do.promoción_id FROM detalle_orden do WHERE do.fecha_cobro BETWEEN '{P1}' AND '{P2}' ) ORDER BY total_aplicaciones DESC LIMIT 1",
     "SELECT COUNT(*) AS total_promociones_vencidas FROM vw_promociones WHERE fecha_fin BETWEEN '{P1}' AND '{P2}'",
     "SELECT * FROM vw_empleado_mayor_garantias",
     "SELECT nombre_cliente, nombre_automovil, COUNT(servicio_id) AS cantidad_servicios FROM vw_cliente_automovil_servicios WHERE fecha BETWEEN '{P1}' AND '{P2}' GROUP BY nombre_cliente, nombre_automovil ORDER BY cantidad_servicios DESC LIMIT 1",
-    "SELECT id_servicio, ganancia_servicio, fecha_servicio FROM vw_servicios_menor_ganancia WHERE fecha_servicio BETWEEN '{P1}' AND '{P2}' ORDER BY ganancia_servicio ASC LIMIT {P3}"
+    "SELECT id_servicio, descripción_servicio AS descripción, ganancia_servicio, fecha_servicio FROM vw_servicios_ganancia WHERE fecha_servicio BETWEEN '{P1}' AND '{P2}' ORDER BY ganancia_servicio ASC LIMIT {P3}"
   ];
+
+  export const número_consultas = plantillas.length;
 </script>

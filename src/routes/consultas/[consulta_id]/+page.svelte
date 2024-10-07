@@ -22,7 +22,7 @@
 	<title>Consulta {data.consulta_id}</title>
 </svelte:head>
 
-<div class="p-8">
+<div class="p-8 h-screen">
   <h1>{descripciones[data.consulta_id-1]}</h1>
   <h2 hidden={P.length == 0}>Parámetros</h2>
   <div class="w-full flex flex-row gap-2 mb-2">

@@ -16,9 +16,3 @@
 <section class="flex flex-col gap-2">
   La nada absoluta. Selecciona una opción de navegación.
 </section>
-
-<style>
-
-	/* CSS Goes Here */
-	
-</style>
