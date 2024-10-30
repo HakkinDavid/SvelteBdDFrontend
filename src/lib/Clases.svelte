@@ -146,6 +146,8 @@
       );
       insert_string += ')';
 
+      console.log("INSERCIÓN GENERADA:\n" + insert_string);
+
       goto('/operar/' + encodeURIComponent(insert_string));
     }
 
@@ -153,7 +155,9 @@
       if (!this.#existent) return;
       if (isNaN(this.#id)) return;
       if (confirm("Confirma que deseas eliminar el registro de " + this.nombre_completo + ".")) {
-        goto('/operar/' + encodeURIComponent('DELETE FROM cliente WHERE id = ' + this.#id));
+        let delete_string = 'DELETE FROM cliente WHERE id = ' + this.#id;
+        console.log("ELIMINACIÓN GENERADA:\n" + delete_string);
+        goto('/operar/' + encodeURIComponent(delete_string));
       }
     }
   };
