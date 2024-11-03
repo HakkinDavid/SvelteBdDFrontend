@@ -3,6 +3,7 @@
   export class Cliente {
     #existent = false;
     static props_list = new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']);
+    #backup = {};
 
     #id = 0;
     #nombre = null;
@@ -40,6 +41,7 @@
     get correo () {
       return this.#correo;
     }
+
     set nombre (x) {
       if (typeof x == "undefined" || typeof x == "null") return;
       if (typeof x == "string" && x.length == 0) x = null;
@@ -93,6 +95,14 @@
       this.#teléfono = x.teléfono;
       this.#RFC = x.RFC;
       this.#correo = x.correo;
+
+      this.#backup.nombre = this.#nombre;
+      this.#backup.apellido1 = this.#apellido1;
+      this.#backup.apellido2 = this.#apellido2;
+      this.#backup.dirección = this.#dirección;
+      this.#backup.teléfono = this.#teléfono;
+      this.#backup.RFC = this.#RFC;
+      this.#backup.correo = this.#correo;
     }
 
     get nombre_completo () {
@@ -122,13 +132,15 @@
         return;
       }
       if (!this.validate()) return;
-      let update_string = 'UPDATE cliente SET ';
+      let update_string = 'CALL stpUpd_cliente(' + this.#id + ', ';
       let i = 0;
-      this.#update_list.forEach((prop) => {
-        update_string += prop + ' = ' + (this[prop] != null ? '\'' : '') + this[prop] + (this[prop] != null ? '\'' : '') + (i < (this.#update_list.size-1) ? ', ' : ' ');
-        i++;
-      });
-      update_string += 'WHERE id = ' + this.#id;
+      Cliente.props_list.forEach(
+        (prop) => {
+          update_string += (this[prop] != null ? '\'' : '') + this[prop] + (this[prop] != null ? '\'' : '') + (i < (Cliente.props_list.size-1) ? ', ' : '');
+          i++;
+        }
+      );
+      update_string += ')';
       console.log('ACTUALIZACIÓN GENERADA:\n' + update_string);
       goto('/operar/' + encodeURIComponent(update_string));
     }
@@ -136,7 +148,7 @@
     insert () {
       if (this.#existent) return;
       if (!this.validate()) return;
-      let insert_string = 'INSERT INTO cliente (' + [...Cliente.props_list].join(", ") + ') VALUES (';
+      let insert_string = 'CALL stpIns_cliente(';
       let i = 0;
       Cliente.props_list.forEach(
         (prop) => {
@@ -159,6 +171,16 @@
         console.log("ELIMINACIÓN GENERADA:\n" + delete_string);
         goto('/operar/' + encodeURIComponent(delete_string));
       }
+    }
+
+    reset () {
+      if (!this.#existent) return;
+      if (isNaN(this.#id)) return;
+      Cliente.props_list.forEach(
+        (prop) => {
+          this[prop] = this.#backup[prop];
+        }
+      );
     }
   };
 </script>
