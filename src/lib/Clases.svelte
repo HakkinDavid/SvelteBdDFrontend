@@ -14,6 +14,8 @@
     #RFC = null;
     #correo = null;
     #update_list = new Set();
+
+    // GETTERS
     get existent () {
       return this.#existent;
     }
@@ -42,6 +44,7 @@
       return this.#correo;
     }
 
+    // SETTERS
     set nombre (x) {
       if (typeof x == "undefined" || typeof x == "null") return;
       if (typeof x == "string" && x.length == 0) x = null;
@@ -167,7 +170,7 @@
       if (!this.#existent) return;
       if (isNaN(this.#id)) return;
       if (confirm("Confirma que deseas eliminar el registro de " + this.nombre_completo + ".")) {
-        let delete_string = 'DELETE FROM cliente WHERE id = ' + this.#id;
+        let delete_string = 'CALL stpDel_cliente(' + this.#id + ')';
         console.log("ELIMINACIÓN GENERADA:\n" + delete_string);
         goto('/operar/' + encodeURIComponent(delete_string));
       }
@@ -181,6 +184,7 @@
           this[prop] = this.#backup[prop];
         }
       );
+      this.#update_list = new Set();
     }
   };
 </script>
