@@ -107,7 +107,7 @@
     }
 
     static invalid_input(x) {
-      if (typeof x == "undefined" || typeof x == "null") return true;
+      if (typeof x == "undefined") return true;
       return false;
     }
 
