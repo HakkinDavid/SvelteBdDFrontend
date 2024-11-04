@@ -4,7 +4,8 @@
     static columns = {
       "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']),
       "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
-      "departamento": new Set(['nombre'])
+      "departamento": new Set(['nombre']),
+      "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id'])
     };
     type = '';
     existent = false;
@@ -212,6 +213,47 @@
       switch (null) {
         case this.data.nombre:
           alert('El nombre no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Vehículo extends Row {
+    // PROPIEDADES DINÁMICAS
+    get nombre_completo () {
+      return this.data.marca + ' ' + this.data.modelo + ' ' + this.data.año + ' ' + this.data.color;
+    }
+
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'vehículo');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.marca:
+          alert('La marca no puede ser nula.');
+          valid = false;
+        break;
+        case this.data.modelo:
+          alert('El modelo no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.año:
+          alert('El año no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.color:
+          alert('El color no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.cliente_id:
+          alert('El dueño no puede ser nulo.');
           valid = false;
         break;
         default:

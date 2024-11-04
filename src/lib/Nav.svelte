@@ -7,6 +7,7 @@
     { route: '/clientes', name: 'Clientes' },
 		{ route: '/empleados', name: 'Empleados' },
 		{ route: '/departamentos', name: 'Departamentos' },
+		{ route: '/vehículos', name: 'Vehículos' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 
