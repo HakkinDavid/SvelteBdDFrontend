@@ -15,7 +15,7 @@
     {:else}
       <p>{registro.nombre}</p>
       <p>{registro.descripción}</p>
-      <p>{registro.precio_unitario}</p>
+      <p>Precio unitario: {registro.precio_unitario}</p>
     {/if}
   </div>
   <div class="flex flex-col gap-2">

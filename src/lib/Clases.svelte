@@ -6,7 +6,8 @@
       "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
       "departamento": new Set(['nombre']),
       "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id']),
-      "catalogo": new Set(['nombre', 'descripción', 'precio_unitario'])
+      "catalogo": new Set(['nombre', 'descripción', 'precio_unitario']),
+      "factura": new Set(['RFC', 'fecha', 'uso_CFDI', 'monto'])
     };
     type = '';
     existent = false;
@@ -279,6 +280,38 @@
         break;
         case this.data.precio_unitario:
           alert('El precio unitario no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Factura extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'factura');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.RFC:
+          alert('El RFC no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.fecha:
+          alert('La fecha no puede ser nula.');
+          valid = false;
+        break;
+        case this.data.uso_CFDI:
+          alert('El uso de CFDI no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.monto:
+          alert('El monto no puede ser nulo.');
           valid = false;
         break;
         default:

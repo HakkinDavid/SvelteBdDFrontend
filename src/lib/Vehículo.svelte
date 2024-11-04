@@ -22,7 +22,7 @@
         <span>Dueño:
           <select class="w-1/16 focus:outline-0 bg-transparent" bind:value={registro.cliente_id}>
           {#each dueño as d}
-            <option value={d.id}>{d.nombre + ' ' + d.apellido1 + (d.apellido2 ? ' ' + d.apellido2 : '')}</option>
+            <option value={d.id}>{d.nombre}</option>
           {/each}
           </select>
         </span>
@@ -30,7 +30,7 @@
     {:else}
       <p class="text-lg">{registro.nombre_completo}</p>
       <p class="text-sm flex flex-row gap-2">
-        <span>Dueño: {(() => {let d = dueño.find((e) => e.id === registro.cliente_id); return d.nombre + ' ' + d.apellido1 + (d.apellido2 ? ' ' + d.apellido2 : '')})()}</span>
+        <span>Dueño: {dueño.find((e) => e.id === registro.cliente_id).nombre}</span>
       </p>
     {/if}
   </div>

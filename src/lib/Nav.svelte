@@ -9,6 +9,7 @@
 		{ route: '/departamentos', name: 'Departamentos' },
 		{ route: '/vehículos', name: 'Vehículos' },
 		{ route: '/catálogo', name: 'Catálogo' },
+		{ route: '/facturas', name: 'Facturas' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 
