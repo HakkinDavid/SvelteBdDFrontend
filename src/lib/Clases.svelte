@@ -2,7 +2,8 @@
   import { goto } from "$app/navigation";
   class Row {
     static columns = {
-      "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo'])
+      "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']),
+      "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id'])
     };
     type = '';
     existent = false;
@@ -149,6 +150,47 @@
         break;
         case this.data.apellido1:
           alert('El apellido 1 no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Empleado extends Row {
+    // PROPIEDADES DINÁMICAS
+    get nombre_completo () {
+      return this.data.nombre + ' ' + this.data.apellido1 + (this.data.apellido2 ? ' ' + this.data.apellido2 : '');
+    }
+
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'empleado');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.nombre:
+          alert('El nombre no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.apellido1:
+          alert('El apellido 1 no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.RFC:
+          alert('El RFC no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.puesto_id:
+          alert('El ID de puesto no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.departamento_id:
+          alert('El ID de departamento no puede ser nulo.');
           valid = false;
         break;
         default:

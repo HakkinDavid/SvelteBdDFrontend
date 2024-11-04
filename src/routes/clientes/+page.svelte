@@ -13,8 +13,8 @@
 
 <section class="flex flex-col gap-2">
   <h3>Clientes</h3>
-	{#each data.cliente as cliente}
-    <Cliente data={cliente}/>
+	{#each data.cliente as _, i}
+    <Cliente bind:data={data.cliente[i]}/>
   {/each}
   {#if !adding}
     <button class="h-12 w-1/2 mx-auto px-2 rounded-full bg-blue-400 text-sm" on:click={()=>{adding = true;}}>Añadir</button>
@@ -22,9 +22,3 @@
     <Cliente data={null} bind:editing={adding}/>
   {/if}
 </section>
-
-<style>
-
-	/* CSS Goes Here */
-	
-</style>

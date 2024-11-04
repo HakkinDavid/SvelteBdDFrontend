@@ -17,13 +17,15 @@
         <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Apellido 2" bind:value={registro.apellido2} />
       </div>
       <div class="flex flex-row text-sm gap-2">
+        <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Dirección" bind:value={registro.dirección} />
         <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Correo" bind:value={registro.correo} />
-        <input class="w-1/8 focus:outline-0 bg-transparent" placeholder="Teléfono" bind:value={registro.teléfono} />
-        <input class="w-1/8 focus:outline-0 bg-transparent" placeholder="RFC" bind:value={registro.RFC} />
+        <input class="w-1/12 focus:outline-0 bg-transparent" placeholder="Teléfono" bind:value={registro.teléfono} />
+        <input class="w-1/12 focus:outline-0 bg-transparent" placeholder="RFC" bind:value={registro.RFC} />
       </div>
     {:else}
       <p class="text-lg">{registro.nombre_completo}</p>
       <p class="text-sm flex flex-row gap-2">
+        {#if registro.dirección !== null}<a href="https://maps.google.com/?q={registro.dirección}" class="text-blue-500 underline">{registro.dirección}</a>{/if}
         {#if registro.correo !== null}<a href="mailto:{registro.correo}" class="text-blue-500 underline">{registro.correo}</a>{/if}
         {#if registro.teléfono !== null}<a href="tel:+52{registro.teléfono}" class="text-blue-500 underline">{registro.teléfono}</a>{/if}
         {#if registro.RFC}
