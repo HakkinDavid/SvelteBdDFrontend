@@ -30,15 +30,36 @@
         this.data[prop] = x[prop] || null;
         this.backup[prop] = x[prop] || null;
       });
+
+      return new Proxy(this, {
+        get(target, prop) {
+          if (prop in target.data) {
+            return target.data[prop];
+          }
+          return target[prop];
+        },
+        set(target, prop, x) {
+          if (prop in target.data) {
+            if (Row.invalid_input(x)) return false;
+            target.data[prop] = Row.emptify(x);
+            target.update_list.add(prop);
+            return true;
+          }
+          else {
+            target[prop] = x;
+            return true;
+          }
+        }
+      });
     }
 
     // UTILIDADES
-    invalid_input(x) {
+    static invalid_input(x) {
       if (typeof x == "undefined") return true;
       return false;
     }
 
-    emptify(x) {
+    static emptify(x) {
       if (typeof x == "string" && x.length == 0) return null;
       return x;
     }
@@ -108,69 +129,9 @@
     }
   };
   export class Cliente extends Row {
-    // ACCESO
-    get nombre () {
-      return this.data.nombre;
-    }
-    get apellido1 () {
-      return this.data.apellido1;
-    }
-    get apellido2 () {
-      return this.data.apellido2;
-    }
-    get dirección () {
-      return this.data.dirección;
-    }
-    get teléfono () {
-      return this.data.teléfono;
-    }
-    get RFC () {
-      return this.data.RFC;
-    }
-    get correo () {
-      return this.data.correo;
-    }
-
     // PROPIEDADES DINÁMICAS
     get nombre_completo () {
       return this.data.nombre + ' ' + this.data.apellido1 + (this.data.apellido2 ? ' ' + this.data.apellido2 : '');
-    }
-
-    // DEFINICIÓN
-    set nombre (x) {
-      if (super.invalid_input(x)) return;
-      this.data.nombre = super.emptify(x);
-      this.update_list.add('nombre');
-    }
-    set apellido1 (x) {
-      if (super.invalid_input(x)) return;
-      this.data.apellido1 = super.emptify(x);
-      this.update_list.add('apellido1');
-    }
-    set apellido2 (x) {
-      if (super.invalid_input(x)) return;
-      this.data.apellido2 = super.emptify(x);
-      this.update_list.add('apellido2');
-    }
-    set dirección (x) {
-      if (super.invalid_input(x)) return;
-      this.data.dirección = super.emptify(x);
-      this.update_list.add('dirección');
-    }
-    set teléfono (x) {
-      if (super.invalid_input(x)) return;
-      this.data.teléfono = super.emptify(x);
-      this.update_list.add('teléfono');
-    }
-    set RFC (x) {
-      if (super.invalid_input(x)) return;
-      this.data.RFC = super.emptify(x);
-      this.update_list.add('RFC');
-    }
-    set correo (x) {
-      if (super.invalid_input(x)) return;
-      this.data.correo = super.emptify(x);
-      this.update_list.add('correo');
     }
 
     // CONSTRUCTOR
