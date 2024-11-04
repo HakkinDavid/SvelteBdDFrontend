@@ -11,7 +11,7 @@
     {#if editing}
       <input class="w-full focus:outline-0 bg-transparent" placeholder="Nombre" bind:value={registro.nombre} />
       <input class="w-full focus:outline-0 bg-transparent" placeholder="Descripción" bind:value={registro.descripción} />
-      <input type="number" class="w-full focus:outline-0 bg-transparent" placeholder="Precio unitario" bind:value={registro.precio_unitario} />
+      <span>Precio unitario: <input type="number" class="w-1/2 focus:outline-0 bg-transparent" placeholder="Precio unitario" bind:value={registro.precio_unitario} /></span>
     {:else}
       <p>{registro.nombre}</p>
       <p>{registro.descripción}</p>
