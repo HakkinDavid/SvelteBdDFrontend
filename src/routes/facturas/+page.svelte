@@ -11,7 +11,6 @@
 
 
 <section class="flex flex-col gap-2">
-  <h3>Facturas</h3>
 	{#each data.factura as _, i}
     <Factura bind:data={data.factura[i]} bind:RFC={data.RFC} bind:cfdi={data.cfdi}/>
   {/each}

@@ -16,7 +16,7 @@
   });
 </script>
 
-<div class="bg-cyan-200 w-full border border-blue-900 flex flex-row p-2 gap-2 items-center">
+<div class="bg-cyan-200 w-3/4 border border-blue-900 flex flex-row p-2 gap-2 items-center self-center">
   <div><img src="/images/resultado.jpeg" class="w-12 h-12 rounded-full"/></div>
   <div class="w-full flex flex-col h-full">
     {#if data.nombre}<p class="text-lg font-bold">{data.nombre + (data.apellido1 != undefined ? ' ' + data.apellido1 : '') + (data.apellido2 != undefined ? ' ' + data.apellido2 : '')}</p>{/if}

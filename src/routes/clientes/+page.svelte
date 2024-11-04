@@ -12,7 +12,6 @@
 
 
 <section class="flex flex-col gap-2">
-  <h3>Clientes</h3>
 	{#each data.cliente as _, i}
     <Cliente bind:data={data.cliente[i]}/>
   {/each}

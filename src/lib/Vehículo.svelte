@@ -9,7 +9,7 @@
   export const registro = new Vehículo(data);
 </script>
 
-<div class="bg-cyan-200 w-full border border-blue-900 flex flex-row p-2 gap-2 items-center">
+<div class="bg-cyan-200 w-3/4 border border-blue-900 flex flex-row p-2 gap-2 items-center self-center">
   <div class="flex flex-row items-center gap-2 mr-4"><p>{registro.ID === 0 ? '~' : registro.ID}</p><img src="/images/carro.png" class="w-12 h-12 rounded-full"/></div>
   <div class="w-full flex flex-col h-full">
     {#if editing}

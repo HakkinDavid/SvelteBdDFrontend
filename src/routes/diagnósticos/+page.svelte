@@ -11,7 +11,6 @@
 
 
 <section class="flex flex-col gap-2">
-  <h3>Diagnósticos</h3>
 	{#each data.diagnóstico as _, i}
     <Diagnóstico bind:data={data.diagnóstico[i]} bind:vehículo={data.vehículo}/>
   {/each}

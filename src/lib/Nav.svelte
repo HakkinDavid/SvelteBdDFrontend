@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 
 	
 	const links = [
@@ -20,7 +21,7 @@
   <img src="/icon.png" class="w-12"/>
 
 	{#each links as link}
-			<a href="{link.route}">{link.name}</a>
+			<a class="{$page.route.id === link.route ? 'bg-green-900 px-2 rounded-lg' : ''}" href="{link.route}">{link.name}</a>
 	{/each}
 
 </nav>

@@ -13,7 +13,6 @@
 
 
 <section class="flex flex-col gap-2">
-  <h3>Vehículos</h3>
 	{#each data.vehículo as _, i}
     <Vehículo bind:data={data.vehículo[i]} bind:dueño={data.cliente}/>
   {/each}

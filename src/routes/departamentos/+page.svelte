@@ -11,7 +11,6 @@
 
 
 <section class="flex flex-col gap-2">
-  <h3>Departamento</h3>
 	{#each data.departamento as _, i}
     <Departamento bind:data={data.departamento[i]}/>
   {/each}
