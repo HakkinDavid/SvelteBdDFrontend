@@ -1,131 +1,76 @@
 <script context="module">
   import { goto } from "$app/navigation";
-  export class Cliente {
-    #existent = false;
-    static props_list = new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']);
-    #data = {};
-    #backup = {};
+  class Row {
+    static columns = {
+      "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo'])
+    };
+    type = '';
+    existent = false;
+    data = {};
+    backup = {};
     
-    #update_list = new Set();
+    update_list = new Set();
 
-    // GETTERS
+    // ACCESO
     get existent () {
-      return this.#existent;
+      return this.existent;
     }
     get ID () {
-      return this.#data.id;
-    }
-    get nombre () {
-      return this.#data.nombre;
-    }
-    get apellido1 () {
-      return this.#data.apellido1;
-    }
-    get apellido2 () {
-      return this.#data.apellido2;
-    }
-    get dirección () {
-      return this.#data.dirección;
-    }
-    get teléfono () {
-      return this.#data.teléfono;
-    }
-    get RFC () {
-      return this.#data.RFC;
-    }
-    get correo () {
-      return this.#data.correo;
+      return this.data.id;
     }
 
-    // SETTERS
-    set nombre (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.nombre = Cliente.emptify(x);
-      this.#update_list.add('nombre');
-    }
-    set apellido1 (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.apellido1 = Cliente.emptify(x);
-      this.#update_list.add('apellido1');
-    }
-    set apellido2 (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.apellido2 = Cliente.emptify(x);
-      this.#update_list.add('apellido2');
-    }
-    set dirección (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.dirección = Cliente.emptify(x);
-      this.#update_list.add('dirección');
-    }
-    set teléfono (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.teléfono = Cliente.emptify(x);
-      this.#update_list.add('teléfono');
-    }
-    set RFC (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.RFC = Cliente.emptify(x);
-      this.#update_list.add('RFC');
-    }
-    set correo (x) {
-      if (Cliente.invalid_input(x)) return;
-      this.#data.correo = Cliente.emptify(x);
-      this.#update_list.add('correo');
-    }
-    constructor (x) {
-      if (x === null) return;
-      this.#existent = true;
-      this.#data.id = x.id;
+    // CONSTRUCTOR
+    constructor (x, y) {
+      this.type = y;
+      if (x === null) x = {id: 0};
+      else this.existent = true;
+      this.data.id = x.id;
 
-      Cliente.props_list.forEach((prop) => {
-        this.#data[prop] = x[prop];
-        this.#backup[prop] = x[prop];
+      Row.columns[this.type].forEach((prop) => {
+        this.data[prop] = x[prop] || null;
+        this.backup[prop] = x[prop] || null;
       });
     }
 
-    get nombre_completo () {
-      return this.#data.nombre + ' ' + this.#data.apellido1 + (this.#data.apellido2 ? ' ' + this.#data.apellido2 : '');
-    }
-
-    validate () {
-      let valid = true;
-      if (isNaN(this.#data.id)) valid = false;
-      switch (null) {
-        case this.#data.nombre:
-          alert('El nombre no puede ser nulo.');
-          valid = false;
-        break;
-        case this.#data.apellido1:
-          alert('El apellido 1 no puede ser nulo.');
-          valid = false;
-        break;
-        default:
-        break;
-      }
-      return valid;
-    }
-
-    static invalid_input(x) {
+    // UTILIDADES
+    invalid_input(x) {
       if (typeof x == "undefined") return true;
       return false;
     }
 
-    static emptify(x) {
+    emptify(x) {
       if (typeof x == "string" && x.length == 0) return null;
       return x;
     }
 
+    validate () {
+      let valid = true;
+      if (isNaN(this.data.id)) valid = false;
+      return valid;
+    }
+
+    reset () {
+      if (!this.existent) return;
+      if (isNaN(this.data.id)) return;
+      Row.columns[this.type].forEach(
+        (prop) => {
+          this.data[prop] = this.backup[prop];
+        }
+      );
+      this.update_list = new Set();
+    }
+
+    // LLAMADAS A PROCEDIMIENTOS ALMACENADOS
     update () {
-      if (this.#update_list.size < 1) {
+      if (this.update_list.size < 1) {
         return;
       }
       if (!this.validate()) return;
-      let update_string = 'CALL stpUpd_cliente(' + this.#data.id + ', ';
+      let update_string = 'CALL stpUpd_' + this.type + '(' + this.data.id + ', ';
       let i = 0;
-      Cliente.props_list.forEach(
+      Row.columns[this.type].forEach(
         (prop) => {
-          update_string += (this.#data[prop] != null ? '\'' : '') + this.#data[prop] + (this.#data[prop] != null ? '\'' : '') + (i < (Cliente.props_list.size-1) ? ', ' : '');
+          update_string += (this.data[prop] != null ? '\'' : '') + this.data[prop] + (this.data[prop] != null ? '\'' : '') + (i < (Row.columns[this.type].size-1) ? ', ' : '');
           i++;
         }
       );
@@ -135,13 +80,13 @@
     }
 
     insert () {
-      if (this.#existent) return;
+      if (this.existent) return;
       if (!this.validate()) return;
-      let insert_string = 'CALL stpIns_cliente(';
+      let insert_string = 'CALL stpIns_' + this.type + '(';
       let i = 0;
-      Cliente.props_list.forEach(
+      Row.columns[this.type].forEach(
         (prop) => {
-          insert_string += (this.#data[prop] != null ? '\'' : '') + this.#data[prop] + (this.#data[prop] != null ? '\'' : '') + (i < (Cliente.props_list.size-1) ? ', ' : '');
+          insert_string += (this.data[prop] != null ? '\'' : '') + this.data[prop] + (this.data[prop] != null ? '\'' : '') + (i < (Row.columns[this.type].size-1) ? ', ' : '');
           i++;
         }
       );
@@ -153,24 +98,102 @@
     }
 
     delete () {
-      if (!this.#existent) return;
-      if (isNaN(this.#data.id)) return;
+      if (!this.existent) return;
+      if (isNaN(this.data.id)) return;
       if (confirm("Confirma que deseas eliminar el registro de " + this.nombre_completo + ".")) {
-        let delete_string = 'CALL stpDel_cliente(' + this.#data.id + ')';
+        let delete_string = 'CALL stpDel_' + this.type + '(' + this.data.id + ')';
         console.log("ELIMINACIÓN GENERADA:\n" + delete_string);
         goto('/operar/' + encodeURIComponent(delete_string));
       }
     }
+  };
+  export class Cliente extends Row {
+    // ACCESO
+    get nombre () {
+      return this.data.nombre;
+    }
+    get apellido1 () {
+      return this.data.apellido1;
+    }
+    get apellido2 () {
+      return this.data.apellido2;
+    }
+    get dirección () {
+      return this.data.dirección;
+    }
+    get teléfono () {
+      return this.data.teléfono;
+    }
+    get RFC () {
+      return this.data.RFC;
+    }
+    get correo () {
+      return this.data.correo;
+    }
 
-    reset () {
-      if (!this.#existent) return;
-      if (isNaN(this.#data.id)) return;
-      Cliente.props_list.forEach(
-        (prop) => {
-          this.#data[prop] = this.#backup[prop];
-        }
-      );
-      this.#update_list = new Set();
+    // PROPIEDADES DINÁMICAS
+    get nombre_completo () {
+      return this.data.nombre + ' ' + this.data.apellido1 + (this.data.apellido2 ? ' ' + this.data.apellido2 : '');
+    }
+
+    // DEFINICIÓN
+    set nombre (x) {
+      if (super.invalid_input(x)) return;
+      this.data.nombre = super.emptify(x);
+      this.update_list.add('nombre');
+    }
+    set apellido1 (x) {
+      if (super.invalid_input(x)) return;
+      this.data.apellido1 = super.emptify(x);
+      this.update_list.add('apellido1');
+    }
+    set apellido2 (x) {
+      if (super.invalid_input(x)) return;
+      this.data.apellido2 = super.emptify(x);
+      this.update_list.add('apellido2');
+    }
+    set dirección (x) {
+      if (super.invalid_input(x)) return;
+      this.data.dirección = super.emptify(x);
+      this.update_list.add('dirección');
+    }
+    set teléfono (x) {
+      if (super.invalid_input(x)) return;
+      this.data.teléfono = super.emptify(x);
+      this.update_list.add('teléfono');
+    }
+    set RFC (x) {
+      if (super.invalid_input(x)) return;
+      this.data.RFC = super.emptify(x);
+      this.update_list.add('RFC');
+    }
+    set correo (x) {
+      if (super.invalid_input(x)) return;
+      this.data.correo = super.emptify(x);
+      this.update_list.add('correo');
+    }
+
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'cliente');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.nombre:
+          alert('El nombre no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.apellido1:
+          alert('El apellido 1 no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
     }
   };
 </script>
