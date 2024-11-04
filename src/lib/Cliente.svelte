@@ -1,4 +1,5 @@
 <script>
+  import Panel from '$lib/Panel.svelte';
   import {Cliente} from '$lib/Clases.svelte';
   export let data;
   
@@ -36,17 +37,5 @@
       </p>
     {/if}
   </div>
-  <div class="flex flex-col gap-2">
-    {#if editing}
-      {#if registro.existent}
-        <button class="h-6 px-2 rounded-full bg-blue-400 text-sm" on:click={()=>{registro.update();}}>Actualizar</button>
-      {:else}
-        <button class="h-6 px-2 rounded-full bg-green-400 text-sm" on:click={()=>{registro.insert();}}>Guardar</button>
-      {/if}
-      <button class="h-6 px-2 rounded-full bg-red-400 text-sm" on:click={()=>{registro.reset(); editing = false;}}>Cancelar</button>
-    {:else}
-      <button class="h-6 px-2 rounded-full bg-gray-400 text-sm" on:click={()=>{editing = true;}}>Editar</button>
-      <button class="h-6 px-2 rounded-full bg-red-700 text-sm" on:click={()=>{registro.delete();}}>Eliminar</button>
-    {/if}
-  </div>
+  <Panel bind:existent={registro.existent} bind:editing update={()=>{registro.update()}} _delete={()=>{registro.delete()}} insert={()=>{registro.insert()}} reset={()=>{registro.reset()}}/>
 </div>
