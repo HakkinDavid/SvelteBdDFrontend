@@ -3,7 +3,8 @@
   class Row {
     static columns = {
       "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']),
-      "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id'])
+      "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
+      "departamento": new Set(['nombre'])
     };
     type = '';
     existent = false;
@@ -191,6 +192,26 @@
         break;
         case this.data.departamento_id:
           alert('El ID de departamento no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Departamento extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'departamento');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.nombre:
+          alert('El nombre no puede ser nulo.');
           valid = false;
         break;
         default:

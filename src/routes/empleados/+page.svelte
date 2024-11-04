@@ -23,9 +23,3 @@
     <Empleado data={null} bind:departamento={data.departamento} bind:puesto={data.puesto} bind:jefe={data.empleado} bind:editing={adding}/>
   {/if}
 </section>
-
-<style>
-
-	/* CSS Goes Here */
-	
-</style>
