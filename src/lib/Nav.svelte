@@ -8,6 +8,7 @@
 		{ route: '/empleados', name: 'Empleados' },
 		{ route: '/departamentos', name: 'Departamentos' },
 		{ route: '/vehículos', name: 'Vehículos' },
+		{ route: '/catálogo', name: 'Catálogo' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 

@@ -5,7 +5,8 @@
       "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']),
       "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
       "departamento": new Set(['nombre']),
-      "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id'])
+      "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id']),
+      "catalogo": new Set(['nombre', 'descripción', 'precio_unitario'])
     };
     type = '';
     existent = false;
@@ -254,6 +255,30 @@
         break;
         case this.data.cliente_id:
           alert('El dueño no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Catálogo extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'catalogo');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.nombre:
+          alert('El nombre no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.precio_unitario:
+          alert('El precio unitario no puede ser nulo.');
           valid = false;
         break;
         default:

@@ -57,7 +57,7 @@
   <div class="flex flex-col gap-2">
     {#if editing}
       {#if registro.existent}
-        <button class="h-6 px-2 rounded-full bg-blue-400 text-sm" on:click={()=>{editing = false; registro.update();}}>Actualizar</button>
+        <button class="h-6 px-2 rounded-full bg-blue-400 text-sm" on:click={()=>{registro.update();}}>Actualizar</button>
       {:else}
         <button class="h-6 px-2 rounded-full bg-green-400 text-sm" on:click={()=>{registro.insert();}}>Guardar</button>
       {/if}

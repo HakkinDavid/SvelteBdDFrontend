@@ -1,17 +1,21 @@
 <script>
-  import {Departamento} from '$lib/Clases.svelte';
+  import {Catálogo} from '$lib/Clases.svelte';
   export let data;
   export let editing = false;
-  export const registro = new Departamento(data);
+  export const registro = new Catálogo(data);
 </script>
 
 <div class="bg-cyan-200 w-full border border-blue-900 flex flex-row p-2 gap-2 items-center">
-  <div class="flex flex-row items-center gap-2 mr-4"><p>{registro.ID === 0 ? '~' : registro.ID}</p><img src="/images/departamento.png" class="w-12 h-12 rounded-full"/></div>
-  <div class="w-full flex flex-col h-full text-lg">
+  <div class="flex flex-row items-center gap-2 mr-4"><p>{registro.ID === 0 ? '~' : registro.ID}</p><img src="/images/pieza.png" class="w-12 h-12 rounded-full"/></div>
+  <div class="w-full flex flex-col h-full text-md">
     {#if editing}
       <input class="w-full focus:outline-0 bg-transparent" placeholder="Nombre" bind:value={registro.nombre} />
+      <input class="w-full focus:outline-0 bg-transparent" placeholder="Descripción" bind:value={registro.descripción} />
+      <input type="number" class="w-full focus:outline-0 bg-transparent" placeholder="Precio unitario" bind:value={registro.precio_unitario} />
     {:else}
       <p>{registro.nombre}</p>
+      <p>{registro.descripción}</p>
+      <p>{registro.precio_unitario}</p>
     {/if}
   </div>
   <div class="flex flex-col gap-2">
