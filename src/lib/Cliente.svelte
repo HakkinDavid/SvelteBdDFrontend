@@ -1,6 +1,5 @@
 <script>
   import {Cliente} from '$lib/Clases.svelte';
-  import { onMount } from 'svelte';
   export let data;
   
   export let editing = false;
