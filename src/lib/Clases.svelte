@@ -160,6 +160,22 @@
         default:
         break;
       }
+
+      // Validación de teléfono (10 dígitos)
+      if (this.data.teléfono && !/^[0-9]{10}$/.test(this.data.teléfono)) {
+        alert('El teléfono debe tener exactamente 10 dígitos.');
+        valid = false;
+      }
+
+      // Validación de correo electrónico
+      if (
+        this.data.correo &&
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.data.correo)
+      ) {
+        alert('El correo electrónico no tiene un formato válido.');
+        valid = false;
+      }
+
       return valid;
     }
   };
@@ -262,6 +278,14 @@
         default:
         break;
       }
+
+      // Validación del año
+      const currentYear = new Date().getFullYear(); // Obtiene el año actual
+      if (this.data.año > currentYear + 1) {
+        alert('El año del vehículo no puede ser mayor al año actual más uno.');
+        valid = false;
+      }
+
       return valid;
     }
   };
@@ -286,6 +310,13 @@
         default:
         break;
       }
+
+      // Validación del precio unitario
+      if (this.data.precio_unitario < 0) {
+        alert('El precio unitario debe ser mayor o igual a 0.');
+        valid = false;
+      }
+
       return valid;
     }
   };
@@ -318,6 +349,22 @@
         default:
         break;
       }
+
+      // Validación de la fecha
+      const today = new Date();
+      const inputDate = new Date(this.data.fecha);
+
+      if (inputDate > today) {
+        alert('La fecha debe ser igual o anterior al día de hoy.');
+        valid = false;
+      }
+
+      // Validación del monto
+      if (this.data.monto < 0) {
+        alert('El monto no puede ser negativo.');
+        valid = false;
+      }
+
       return valid;
     }
   };
@@ -346,6 +393,16 @@
         default:
         break;
       }
+
+      // Validación de la fecha
+      const today = new Date(); // Obtiene la fecha actual
+      const inputDate = new Date(this.data.fecha); // Convierte la fecha de entrada a objeto Date
+
+      if (inputDate > today) {
+        alert('La fecha debe ser igual o anterior al día de hoy.');
+        valid = false;
+      }
+
       return valid;
     }
   };
