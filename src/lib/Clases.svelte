@@ -6,8 +6,9 @@
       "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
       "departamento": new Set(['nombre']),
       "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id']),
-      "catalogo": new Set(['nombre', 'descripción', 'precio_unitario']),
-      "factura": new Set(['RFC', 'fecha', 'uso_CFDI', 'monto'])
+      "catálogo": new Set(['nombre', 'descripción', 'precio_unitario']),
+      "factura": new Set(['RFC', 'fecha', 'uso_CFDI', 'monto']),
+      "diagnóstico": new Set(['descripción', 'fecha', 'vehículo_id'])
     };
     type = '';
     existent = false;
@@ -267,7 +268,7 @@
   export class Catálogo extends Row {
     // CONSTRUCTOR
     constructor (x) {
-      super(x, 'catalogo');
+      super(x, 'catálogo');
     }
 
     // UTILIDADES
@@ -312,6 +313,34 @@
         break;
         case this.data.monto:
           alert('El monto no puede ser nulo.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+      return valid;
+    }
+  };
+  export class Diagnóstico extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'diagnóstico');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.vehículo_id:
+          alert('El ID de vehículo no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.fecha:
+          alert('La fecha no puede ser nula.');
+          valid = false;
+        break;
+        case this.data.descripción:
+          alert('La descripción no puede ser nula.');
           valid = false;
         break;
         default:
