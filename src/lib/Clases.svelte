@@ -8,7 +8,8 @@
       "vehículo": new Set(['marca', 'modelo', 'año', 'color', 'cliente_id']),
       "catálogo": new Set(['nombre', 'descripción', 'precio_unitario']),
       "factura": new Set(['RFC', 'fecha', 'uso_CFDI', 'monto']),
-      "diagnóstico": new Set(['descripción', 'fecha', 'vehículo_id'])
+      "diagnóstico": new Set(['descripción', 'fecha', 'vehículo_id']),
+      "refacción": new Set(['catálogo_id', 'subtotal', 'cantidad'])
     };
     type = '';
     existent = false;
@@ -401,6 +402,43 @@
       if (inputDate > today) {
         alert('La fecha debe ser igual o anterior al día de hoy.');
         valid = false;
+      }
+
+      return valid;
+    }
+  };
+
+  export class Refacción extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'refacción');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.subtotal:
+          alert('El subtotal no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.cantidad:
+          alert('La cantidad no puede ser nula.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+
+      // Validación del subtotal y la cantidad
+      if (this.data.subtotal < 0) {
+          alert('El subtotal debe ser mayor o igual a 0.');
+          valid = false;
+      }
+      
+      if (this.data.cantidad <= 0) {
+          alert('La cantidad debe ser mayor que 0.');
+          valid = false;
       }
 
       return valid;

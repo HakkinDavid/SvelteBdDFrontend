@@ -12,6 +12,7 @@
 		{ route: '/catálogo', name: 'Catálogo' },
 		{ route: '/facturas', name: 'Facturas' },
 		{ route: '/diagnósticos', name: 'Diagnósticos' },
+		{ route: '/refacciones', name: 'Refacciones' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 
