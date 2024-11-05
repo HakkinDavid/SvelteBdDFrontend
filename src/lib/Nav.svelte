@@ -14,6 +14,7 @@
 		{ route: '/diagnósticos', name: 'Diagnósticos' },
 		{ route: '/refacciones', name: 'Refacciones' },
 		{ route: '/servicios', name: 'Servicios' },
+		{ route: '/órdenes', name: 'Órdenes' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 
