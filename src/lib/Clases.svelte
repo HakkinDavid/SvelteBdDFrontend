@@ -9,7 +9,8 @@
       "catálogo": new Set(['nombre', 'descripción', 'precio_unitario']),
       "factura": new Set(['RFC', 'fecha', 'uso_CFDI', 'monto']),
       "diagnóstico": new Set(['descripción', 'fecha', 'vehículo_id']),
-      "refacción": new Set(['catálogo_id', 'subtotal', 'cantidad'])
+      "refacción": new Set(['catálogo_id', 'subtotal', 'cantidad']),
+      "servicio": new Set(['descripción', 'fecha', 'diagnóstico_id', 'mecánico_id', 'garantía_id', 'subtotal'])
     };
     type = '';
     existent = false;
@@ -439,6 +440,47 @@
       if (this.data.cantidad <= 0) {
           alert('La cantidad debe ser mayor que 0.');
           valid = false;
+      }
+
+      return valid;
+    }
+  };
+
+  export class Servicio extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'servicio');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.subtotal:
+          alert('El subtotal no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.fecha:
+          alert('La fecha no puede ser nula.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+
+      // Validación del subtotal
+      if (this.data.subtotal < 0) {
+          alert('El subtotal debe ser mayor o igual a 0.');
+          valid = false;
+      }
+      
+      // Validación de la fecha
+      const today = new Date();
+      const inputDate = new Date(this.data.fecha);
+
+      if (inputDate > today) {
+        alert('La fecha debe ser igual o anterior al día de hoy.');
+        valid = false;
       }
 
       return valid;

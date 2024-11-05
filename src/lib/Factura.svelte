@@ -30,7 +30,7 @@
       <span>Monto: <input type="number" class="w-1/2 focus:outline-0 bg-transparent" placeholder="Monto" bind:value={registro.monto} /></span>
     {:else}
       <span>RFC: {registro.RFC + ' (' + RFC.find((e) => e.RFC === registro.RFC).nombre + ')'}</span>
-      <p>{registro.fecha}</p>
+      <p>{new Date(registro.fecha).toDateString()}</p>
       <span>Uso CFDI: {registro.uso_CFDI + ' (' + cfdi.find((e) => e.id === registro.uso_CFDI).descripción + ')'}</span>
       <p>Monto: {registro.monto}</p>
     {/if}

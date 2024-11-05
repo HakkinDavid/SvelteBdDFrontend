@@ -13,6 +13,7 @@
 		{ route: '/facturas', name: 'Facturas' },
 		{ route: '/diagnósticos', name: 'Diagnósticos' },
 		{ route: '/refacciones', name: 'Refacciones' },
+		{ route: '/servicios', name: 'Servicios' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 

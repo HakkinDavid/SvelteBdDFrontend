@@ -22,7 +22,7 @@
       <span>Descripción: <input class="w-1/2 focus:outline-0 bg-transparent" placeholder="Descripción" bind:value={registro.descripción} /></span>
     {:else}
       <span>Vehículo: {'ID: ' + registro.vehículo_id + ' (' + vehículo.find((e) => e.id === registro.vehículo_id).nombre_completo + ')'}</span>
-      <p>{registro.fecha}</p>
+      <p>{new Date(registro.fecha).toDateString()}</p>
       <p>Descripción: {registro.descripción}</p>
     {/if}
   </div>
