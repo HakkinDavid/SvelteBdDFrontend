@@ -11,7 +11,8 @@
       "diagnóstico": new Set(['descripción', 'fecha', 'vehículo_id']),
       "refacción": new Set(['catálogo_id', 'subtotal', 'cantidad']),
       "servicio": new Set(['descripción', 'fecha', 'diagnóstico_id', 'mecánico_id', 'garantía_id', 'subtotal']),
-      "detalle_orden": new Set(['cliente_id', 'factura_id', 'servicio_id', 'refacción_id', 'promoción_id', 'departamento_id', 'fecha_cobro', 'total'])
+      "detalle_orden": new Set(['cliente_id', 'factura_id', 'servicio_id', 'refacción_id', 'promoción_id', 'departamento_id', 'fecha_cobro', 'total']),
+      "promoción": new Set(['descuento', 'descripción', 'fecha_inicio', 'fecha_fin'])
     };
     type = '';
     existent = false;
@@ -111,7 +112,6 @@
             value = new Date(value).toISOString().split('T')[0];
           }
 
-          // Añade comillas a los valores que no sean nulos
           update_string += (value != null ? '\'' : '') + value + (value != null ? '\'' : '') + (i < (Row.columns[this.type].size - 1) ? ', ' : '');
           i++;
         }
@@ -542,6 +542,55 @@
 
       if (inputDate > today) {
         alert('La fecha debe ser igual o anterior al día de hoy.');
+        valid = false;
+      }
+
+      return valid;
+    }
+  };
+
+  export class Promoción extends Row {
+    // CONSTRUCTOR
+    constructor (x) {
+      super(x, 'promoción');
+    }
+
+    // UTILIDADES
+    validate () {
+      let valid = super.validate();
+      switch (null) {
+        case this.data.descuento:
+          alert('El descuento no puede ser nulo.');
+          valid = false;
+        break;
+        case this.data.descripción:
+          alert('La descripción no puede ser nula.');
+          valid = false;
+        break;
+        case this.data.fecha_inicio:
+          alert('La fecha de inicio no puede ser nula.');
+          valid = false;
+        break;
+        case this.data.fecha_fin:
+          alert('La fecha de fin no puede ser nula.');
+          valid = false;
+        break;
+        default:
+        break;
+      }
+
+      // Validación del descuento
+      if (this.data.descuento < 0 || this.data.descuento > 100) {
+          alert('El descuento debe estar en el rango de 0 a 100.');
+          valid = false;
+      }
+      
+      // Validación de las fechas
+      const startDate = new Date(this.data.fecha_inicio);
+      const endDate = new Date(this.data.fecha_fin);
+
+      if (startDate > endDate) {
+        alert('La fecha de inicio ser igual o anterior a la fecha final.');
         valid = false;
       }
 

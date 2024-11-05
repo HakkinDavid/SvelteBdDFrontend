@@ -15,6 +15,7 @@
 		{ route: '/refacciones', name: 'Refacciones' },
 		{ route: '/servicios', name: 'Servicios' },
 		{ route: '/órdenes', name: 'Órdenes' },
+		{ route: '/promociones', name: 'Promociones' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 
