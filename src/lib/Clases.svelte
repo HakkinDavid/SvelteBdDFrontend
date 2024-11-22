@@ -74,6 +74,12 @@
     validate () {
       let valid = true;
       if (isNaN(this.data.id)) valid = false;
+      Object.keys(this.data).forEach(element => {
+        if (typeof this.data[element] == 'string' && (this.data[element].includes('--') || this.data[element].includes(';') || this.data[element].includes('\'') || this.data[element].includes('\"'))) {
+          valid = false;
+          alert('Esa inyección SQL, joven.');
+        }
+      });
       return valid;
     }
 
