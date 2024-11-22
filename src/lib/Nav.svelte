@@ -13,6 +13,9 @@
 		{ route: '/facturas', name: 'Facturas' },
 		{ route: '/diagnósticos', name: 'Diagnósticos' },
 		{ route: '/refacciones', name: 'Refacciones' },
+		{ route: '/servicios', name: 'Servicios' },
+		{ route: '/órdenes', name: 'Órdenes' },
+		{ route: '/promociones', name: 'Promociones' },
 		{ route: '/consultas', name: 'Consultas' }
 	];
 

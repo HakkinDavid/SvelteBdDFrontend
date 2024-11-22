@@ -16,7 +16,7 @@
       <div class="flex flex-row text-lg">
         <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Marca" bind:value={registro.marca} />
         <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Modelo" bind:value={registro.modelo} />
-        <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Año" bind:value={registro.año} />
+        <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Año" type="number" bind:value={registro.año} />
         <input class="w-1/4 focus:outline-0 bg-transparent" placeholder="Color" bind:value={registro.color} />
       </div>
       <div class="flex flex-row text-sm gap-2">
