@@ -1,6 +1,14 @@
+<!-- Este archivo contiene la definición de clases para manejar distintos tipos de filas (Row) en una base de datos.
+Proporciona utilidades para validar, actualizar, insertar y eliminar registros, además de soporte para la interacción con procedimientos almacenados. -->
 <script context="module">
+  // Importa la función 'goto' de la navegación de Svelte para realizar redirecciones.
+  // Esta función se utiliza para construir URLs que interactúan con procedimientos almacenados.
   import { goto } from "$app/navigation";
+  // Define una clase base para manejar diferentes tipos de filas en una base de datos.
+  // Proporciona propiedades y métodos comunes que pueden ser reutilizados o sobrescritos por clases hijas.
   class Row {
+    // Define las columnas permitidas para cada tipo de fila.
+    // Esto actúa como un esquema para validar y manipular datos.
     static columns = {
       "cliente": new Set(['nombre', 'apellido1', 'apellido2', 'dirección', 'teléfono', 'RFC', 'correo']),
       "empleado": new Set(['nombre', 'apellido1', 'apellido2', 'RFC', 'puesto_id', 'departamento_id', 'jefe_id']),
@@ -14,11 +22,16 @@
       "detalle_orden": new Set(['cliente_id', 'factura_id', 'servicio_id', 'refacción_id', 'promoción_id', 'departamento_id', 'fecha_cobro', 'total']),
       "promoción": new Set(['descuento', 'descripción', 'fecha_inicio', 'fecha_fin'])
     };
+    // Propiedad que almacena el tipo de fila (e.g., cliente, empleado, vehículo).
     type = '';
+    // Propiedad que indica si el registro ya existe en la base de datos.
     existent = false;
+    // Objeto que contiene los datos actuales de la fila.
     data = {};
+    // Objeto que contiene una copia de seguridad de los datos iniciales de la fila.
     backup = {};
     
+    // Conjunto que rastrea las propiedades modificadas desde el último restablecimiento.
     update_list = new Set();
 
     // ACCESO
@@ -30,6 +43,8 @@
     }
 
     // CONSTRUCTOR
+    // Constructor de la clase. Recibe un objeto de datos iniciales y el tipo de fila.
+    // Inicializa las propiedades y configura un proxy para manejar dinámicamente el acceso y modificación de datos.
     constructor (x, y) {
       this.type = y;
       if (x === null) x = {id: 0};
@@ -64,16 +79,20 @@
     }
 
     // UTILIDADES
+    // Verifica si una entrada es inválida (nula o indefinida).
     static invalid_input(x) {
       if (typeof x == "undefined") return true;
       return false;
     }
 
+    // Convierte cadenas vacías en valores nulos para mantener consistencia en la base de datos.
     static emptify(x) {
       if (typeof x == "string" && x.length == 0) return null;
       return x;
     }
 
+    // Valida los datos de la fila para detectar posibles errores o inyecciones SQL.
+    // Muestra alertas si detecta valores sospechosos o inválidos.
     validate () {
       let valid = true;
       if (isNaN(this.data.id)) valid = false;
@@ -86,6 +105,8 @@
       return valid;
     }
 
+    // Restaura los datos de la fila a su estado original.
+    // Limpia las modificaciones realizadas desde el último restablecimiento.
     reset () {
       if (!this.existent) return;
       if (isNaN(this.data.id)) return;
@@ -98,6 +119,7 @@
     }
 
     // LLAMADAS A PROCEDIMIENTOS ALMACENADOS
+    // Genera y ejecuta un procedimiento almacenado para actualizar un registro en la base de datos.
     update () {
       if (this.update_list.size < 1) {
         return;
@@ -127,6 +149,7 @@
       goto('/operar/' + encodeURIComponent(update_string));
     }
 
+    // Genera y ejecuta un procedimiento almacenado para insertar un nuevo registro en la base de datos.
     insert () {
       if (this.existent) return;
       if (!this.validate()) return;
@@ -145,6 +168,7 @@
       goto('/operar/' + encodeURIComponent(insert_string));
     }
 
+    // Genera y ejecuta un procedimiento almacenado para eliminar un registro existente en la base de datos.
     delete () {
       if (!this.existent) return;
       if (isNaN(this.data.id)) return;
@@ -155,8 +179,12 @@
       }
     }
   };
+
+  // Define una clase para manejar filas específicas del tipo 'Cliente'.
+  // Extiende la funcionalidad base de 'Row' y agrega validaciones adicionales.
   export class Cliente extends Row {
     // PROPIEDADES DINÁMICAS
+    // Devuelve el nombre completo del cliente combinando sus nombres y apellidos.
     get nombre_completo () {
       return this.data.nombre + ' ' + this.data.apellido1 + (this.data.apellido2 ? ' ' + this.data.apellido2 : '');
     }
@@ -167,6 +195,7 @@
     }
 
     // UTILIDADES
+    // Valida datos específicos de clientes, como nombre, apellidos, teléfono y correo.
     validate () {
       let valid = super.validate();
       switch (null) {
@@ -200,8 +229,13 @@
       return valid;
     }
   };
+
+  // Define una clase para manejar filas específicas del tipo 'Empleado'.
+  // Extiende la funcionalidad base de 'Row' y agrega validaciones adicionales.
   export class Empleado extends Row {
     // PROPIEDADES DINÁMICAS
+    // Combina los nombres y apellidos del empleado para obtener su nombre completo.
+    // Esto es útil para desplegar información de manera más legible.
     get nombre_completo () {
       return this.data.nombre + ' ' + this.data.apellido1 + (this.data.apellido2 ? ' ' + this.data.apellido2 : '');
     }
@@ -212,6 +246,9 @@
     }
 
     // UTILIDADES
+    // Valida los datos específicos de un empleado.
+    // Verifica que los campos como nombre, apellidos, RFC y CURP sean válidos.
+    // Muestra alertas si algún campo esencial es incorrecto o está vacío.
     validate () {
       let valid = super.validate();
       switch (null) {
@@ -241,6 +278,9 @@
       return valid;
     }
   };
+
+  // Define una clase para manejar filas específicas del tipo 'Departamento'.
+  // Extiende la funcionalidad base de 'Row' y agrega validaciones adicionales.
   export class Departamento extends Row {
     // CONSTRUCTOR
     constructor (x) {
@@ -248,6 +288,8 @@
     }
 
     // UTILIDADES
+    // Valida los datos de un departamento, como su nombre y descripción.
+    // Se asegura de que los valores ingresados cumplan con los requisitos básicos de formato y contenido.
     validate () {
       let valid = super.validate();
       switch (null) {
@@ -261,6 +303,8 @@
       return valid;
     }
   };
+  // Clase para manejar filas específicas del tipo 'Vehículo'.
+  // Extiende la funcionalidad base de 'Row' y valida datos únicos como matrícula, modelo y marca.
   export class Vehículo extends Row {
     // PROPIEDADES DINÁMICAS
     get nombre_completo () {
@@ -273,6 +317,9 @@
     }
 
     // UTILIDADES
+    // Valida los datos específicos de un vehículo.
+    // Verifica que los campos como matrícula, marca, modelo y año sean válidos.
+    // Asegura que los valores cumplan con los estándares establecidos para los registros de vehículos.
     validate () {
       let valid = super.validate();
       switch (null) {
