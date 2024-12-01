@@ -172,7 +172,7 @@ Proporciona utilidades para validar, actualizar, insertar y eliminar registros, 
     delete () {
       if (!this.existent) return;
       if (isNaN(this.data.id)) return;
-      if (confirm("Confirma que deseas eliminar el registro de " + this.nombre_completo + ".")) {
+      if (confirm("Confirma que deseas eliminar el registro [ID: " + this.ID + "] " + (this.nombre_completo ? this.nombre_completo : (this.nombre ? this.nombre : (this.descripción ? this.descripción : this.type))) + ".")) {
         let delete_string = 'CALL stpDel_' + this.type + '(' + this.data.id + ')';
         console.log("ELIMINACIÓN GENERADA:\n" + delete_string);
         goto('/operar/' + encodeURIComponent(delete_string));
