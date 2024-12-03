@@ -485,10 +485,6 @@ Proporciona utilidades para validar, actualizar, insertar y eliminar registros, 
     validate () {
       let valid = super.validate();
       switch (null) {
-        case this.data.subtotal:
-          alert('El subtotal no puede ser nulo.');
-          valid = false;
-        break;
         case this.data.cantidad:
           alert('La cantidad no puede ser nula.');
           valid = false;
@@ -569,10 +565,6 @@ Proporciona utilidades para validar, actualizar, insertar y eliminar registros, 
         break;
         case this.data.departamento_id:
           alert('El departamento no puede ser nulo.');
-          valid = false;
-        break;
-        case this.data.total:
-          alert('El total no puede ser nulo.');
           valid = false;
         break;
         case this.data.fecha_cobro:
